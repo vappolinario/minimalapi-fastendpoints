@@ -1,4 +1,4 @@
-public record CreateOrderRequestDto
+public record CreateOrderRequest
 (
  string FirstName,
  string LastName,

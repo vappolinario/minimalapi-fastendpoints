@@ -1,7 +1,7 @@
 using FastEndpoints;
 using FluentValidation;
 
-public class CreateOrderValidator : Validator<CreateOrderRequestDto>
+public class CreateOrderValidator : Validator<CreateOrderRequest>
 {
     public CreateOrderValidator()
     {

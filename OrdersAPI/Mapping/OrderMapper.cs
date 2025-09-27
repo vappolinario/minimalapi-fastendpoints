@@ -1,8 +1,8 @@
 using FastEndpoints;
 
-public class OrderMapper : Mapper<CreateOrderRequestDto, OrderDto, Order>
+public class OrderMapper : Mapper<CreateOrderRequest, OrderDto, Order>
 {
-    public override Order ToEntity(CreateOrderRequestDto request)
+    public override Order ToEntity(CreateOrderRequest request)
     {
         return new Order
         {

@@ -1,6 +1,6 @@
 using FastEndpoints;
 
-public class OrderCreateEndpoint : Endpoint<CreateOrderRequestDto, OrderDto, OrderMapper>
+public class OrderCreateEndpoint : Endpoint<CreateOrderRequest, OrderDto, OrderMapper>
 {
     private readonly IOrderService _service;
 
@@ -15,7 +15,7 @@ public class OrderCreateEndpoint : Endpoint<CreateOrderRequestDto, OrderDto, Ord
         AllowAnonymous();
     }
 
-    public override async Task HandleAsync(CreateOrderRequestDto req, CancellationToken ct)
+    public override async Task HandleAsync(CreateOrderRequest req, CancellationToken ct)
     {
         var orderRequest = Map.ToEntity(req);
         var order = await _service.CreateOrderAsync(orderRequest);
