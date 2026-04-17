@@ -1,12 +1,11 @@
+
 using Microsoft.EntityFrameworkCore;
+using OrdersAPI.Models;
 
-public class AppDbContext : DbContext
+namespace OrdersAPI.Data
 {
-    public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
+    public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options)
     {
-
+        public DbSet<Order> Orders { get; set; } = null!;
     }
-
-    public DbSet<Order> Orders { get; set; } = null!;
 }
-

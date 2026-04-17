@@ -1,6 +1,11 @@
-public interface IOrderService
+using OrdersAPI.Models;
+
+namespace OrdersAPI.Services
 {
-    public Task<Order> CreateOrderAsync(Order request, CancellationToken cancellationToken = default);
-    public Task<IEnumerable<Order>> GetAllAsync(CancellationToken cancellationToken = default);
-    public Task<Order?> GetByIdAsync(int id, CancellationToken cancellationToken = default);
+    public interface IOrderService
+    {
+        public Task<Order> CreateOrderAsync(Order request, CancellationToken cancellationToken = default);
+        public Task<IEnumerable<Order>> GetAllAsync(CancellationToken cancellationToken = default);
+        public Task<Order?> GetByIdAsync(int id, CancellationToken cancellationToken = default);
+    }
 }

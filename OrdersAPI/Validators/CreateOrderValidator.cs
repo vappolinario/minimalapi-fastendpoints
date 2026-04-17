@@ -1,12 +1,16 @@
 using FastEndpoints;
 using FluentValidation;
+using OrdersAPI.Dtos;
 
-public class CreateOrderValidator : Validator<CreateOrderRequest>
+namespace OrdersAPI.Validators
 {
-    public CreateOrderValidator()
+    public class CreateOrderValidator : Validator<CreateOrderRequest>
     {
-        RuleFor(x => x.FirstName).NotEmpty();
-        RuleFor(x => x.LastName).NotEmpty();
-        RuleFor(x => x.TotalCost).GreaterThanOrEqualTo(0);
+        public CreateOrderValidator()
+        {
+            RuleFor(x => x.FirstName).NotEmpty();
+            RuleFor(x => x.LastName).NotEmpty();
+            RuleFor(x => x.TotalCost).GreaterThanOrEqualTo(0);
+        }
     }
 }

@@ -1,17 +1,12 @@
-using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
+using OrdersAPI.Data;
 
 namespace OrdersAPI.HealthChecks;
 
-public class SqliteHealthCheck : IHealthCheck
+public class SqliteHealthCheck(AppDbContext context) : IHealthCheck
 {
-    private readonly AppDbContext _context;
-
-    public SqliteHealthCheck(AppDbContext context)
-    {
-        _context = context;
-    }
+    private readonly AppDbContext _context = context;
 
     public async Task<HealthCheckResult> CheckHealthAsync(
         HealthCheckContext context,

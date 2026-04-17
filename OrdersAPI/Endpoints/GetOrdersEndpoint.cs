@@ -1,24 +1,27 @@
 using FastEndpoints;
+using OrdersAPI.Dtos;
+using OrdersAPI.Mapping;
+using OrdersAPI.Services;
 
-public class GetOrdersEndpoint : EndpointWithoutRequest<IEnumerable<OrderDto>, OrderMapper>
+namespace OrdersAPI.Endpoints
 {
-    private readonly IOrderService _service;
-
-    public GetOrdersEndpoint(IOrderService service)
+    public class GetOrdersEndpoint(IOrderService service, ILogger<GetOrdersEndpoint> logger) : EndpointWithoutRequest<IEnumerable<OrderDto>, OrderMapper>
     {
-        _service = service;
-    }
+        private readonly IOrderService _service = service;
+        private readonly ILogger _logger = logger;
 
-    public override void Configure()
-    {
-        Get("/api/orders");
-        AllowAnonymous();
-    }
+        public override void Configure()
+        {
+            Get("/api/orders");
+            AllowAnonymous();
+        }
 
-    public override async Task HandleAsync(CancellationToken ct)
-    {
-        var orders = await _service.GetAllAsync();
-        Response = orders.Select( o => Map.FromEntity(o));
-        await Send.OkAsync(Response);
+        public override async Task HandleAsync(CancellationToken ct)
+        {
+            var orders = await _service.GetAllAsync();
+            Response = orders.Select(o => Map.FromEntity(o));
+            _logger.LogInformation("Retrieved {OrdersCount} orders.", orders.Count());
+            await Send.OkAsync(Response);
+        }
     }
 }

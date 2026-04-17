@@ -1,28 +1,29 @@
 using FastEndpoints;
+using OrdersAPI.Dtos;
+using OrdersAPI.Mapping;
+using OrdersAPI.Services;
 
-public class GetOrderByIdEndpoint : EndpointWithoutRequest<OrderDto, OrderMapper>
+namespace OrdersAPI.Endpoints
 {
-    private readonly IOrderService _service;
-
-    public GetOrderByIdEndpoint(IOrderService service)
+    public class GetOrderByIdEndpoint(IOrderService service) : EndpointWithoutRequest<OrderDto, OrderMapper>
     {
-        _service = service;
-    }
+        private readonly IOrderService _service = service;
 
-    public override void Configure()
-    {
-        Get("/api/orders/{id:int}");
-        AllowAnonymous();
-    }
+        public override void Configure()
+        {
+            Get("/api/orders/{id:int}");
+            AllowAnonymous();
+        }
 
-    public override async Task HandleAsync(CancellationToken ct)
-    {
-        int id = Route<int>("id");
-        var order = await _service.GetByIdAsync(id);
+        public override async Task HandleAsync(CancellationToken ct)
+        {
+            int id = Route<int>("id");
+            var order = await _service.GetByIdAsync(id);
 
-        if (order == null)
-            await Send.NotFoundAsync();
-        else
-            await Send.OkAsync(Map.FromEntity(order));
+            if (order == null)
+                await Send.NotFoundAsync();
+            else
+                await Send.OkAsync(Map.FromEntity(order));
+        }
     }
 }
